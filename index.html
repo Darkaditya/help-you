@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Help You – Restaurant management</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF6EE;--surf:#fff;--surf2:#F3ECDD;--ink:#1D1520;--mut:#6B6070;--line:#E6DCCB;--gold:#9A7420;--on:#fff;--err:#B3261E;--ok:#1B7A4B;box-sizing:border-box}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F0B12;--surf:#18121C;--surf2:#211826;--ink:#F4EDE0;--mut:#A99FB0;--line:#33283A;--gold:#D6B36A;--on:#1A1208;--err:#FF8A8A;--ok:#6FD6A0}}
+:root[data-theme="dark"]{--bg:#0F0B12;--surf:#18121C;--surf2:#211826;--ink:#F4EDE0;--mut:#A99FB0;--line:#33283A;--gold:#D6B36A;--on:#1A1208;--err:#FF8A8A;--ok:#6FD6A0}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.5 Hind,system-ui,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3,.logo{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;margin:0;line-height:1.1}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+[hidden]{display:none!important}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{max-width:1180px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:12px}
+.logo{font-size:28px;letter-spacing:.02em;color:var(--gold)}
+.sp{margin-left:auto}.who{color:var(--mut);font-size:14px}
+.btn{font:600 15px Hind,sans-serif;border:1px solid var(--gold);border-radius:6px;padding:10px 18px;cursor:pointer;background:var(--gold);color:var(--on);text-decoration:none;display:inline-block}
+.btn.g{background:transparent;color:var(--gold)}.btn.sm{padding:6px 12px;font-size:14px}.btn.w{width:100%;padding:13px}
+.btn:disabled{opacity:.6}
+main.l{max-width:1180px;margin:auto;padding:0 20px}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:64px 0;align-items:start}
+.hero h1{font-size:clamp(40px,6vw,72px);letter-spacing:-.01em}
+.hero p{color:var(--mut);font-size:19px;max-width:30em;margin:20px 0 28px}
+.hero ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.hero li{padding-left:22px;position:relative}.hero li::before{content:"";position:absolute;left:0;top:.6em;width:10px;height:1px;background:var(--gold)}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:24px}
+.hero .card{border-color:var(--gold)}
+fieldset{border:0;padding:0;margin:0 0 18px}
+legend{font:700 22px "Cormorant Garamond",serif;color:var(--gold);padding:0;margin-bottom:8px;display:flex;justify-content:space-between;width:100%}
+legend small{font:400 13px Hind;color:var(--mut)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-weight:500;font-size:14px;margin-bottom:10px;color:var(--mut)}
+input,select{width:100%;margin-top:4px;font:400 16px Hind,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+input:focus,select:focus{border-color:var(--gold)}input[aria-invalid="true"]{border-color:var(--err)}
+.err{color:var(--err);font-size:13px;display:block}
+.chk{display:flex;gap:10px;align-items:center;color:var(--ink)}.chk input{width:18px;height:18px;margin:0;accent-color:var(--gold)}
+.app{max-width:1180px;margin:auto;padding:20px;display:grid;grid-template-columns:200px 1fr;gap:24px}
+#nav{display:flex;flex-direction:column;gap:4px;position:sticky;top:80px;align-self:start}
+#nav button{text-align:left;background:none;border:0;border-left:2px solid transparent;color:var(--mut);font:500 16px Hind;padding:10px 14px;cursor:pointer}
+#nav button[aria-current="true"]{color:var(--gold);border-left-color:var(--gold);background:var(--surf)}
+#main h2{font-size:38px;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:16px}
+.stat b{display:block;font:700 32px "Cormorant Garamond",serif;color:var(--gold)}.stat span{color:var(--mut);font-size:14px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cols>div>h3,.card>h3{font-size:22px;margin-bottom:10px}
+.o{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}
+.o small{color:var(--mut);display:block}.o .t{display:flex;justify-content:space-between;font-weight:600;margin-bottom:4px}
+.ch{width:100%;height:150px;display:block;background:var(--surf2);border-radius:6px}
+.lbl{display:flex;justify-content:space-between;color:var(--mut);font-size:12px;margin-top:4px}
+.hb{display:grid;grid-template-columns:130px 1fr 40px;gap:10px;align-items:center;margin:6px 0;font-size:15px}
+.hb i{height:8px;background:var(--surf2);border-radius:4px;position:relative}.hb i::after{content:"";position:absolute;inset:0;width:var(--w);background:var(--gold);border-radius:4px}
+.hb b{text-align:right}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:500;font-size:14px}
+.tb{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
+.tb div{border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;background:var(--surf)}.tb .on{border-color:var(--gold);background:var(--surf2)}
+.tb b{font:700 28px "Cormorant Garamond",serif}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.mi{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:4px}.mi small{color:var(--mut);font-size:13px;min-height:2.6em}.mi .pr{color:var(--gold);font-weight:600}.qty{display:flex;align-items:center;gap:10px;font-weight:600}.qty button{background:var(--surf2);border:1px solid var(--line);color:var(--ink);border-radius:4px;width:30px;height:30px;cursor:pointer}.fc{display:none;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.ln{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.ln button{background:var(--surf2);border:1px solid var(--line);color:var(--ink);border-radius:4px;width:28px;height:28px;cursor:pointer}
+dialog{border:1px solid var(--gold);border-radius:10px;background:var(--surf);color:var(--ink);padding:26px;width:min(400px,92vw)}dialog::backdrop{background:rgba(5,3,8,.7)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--gold);color:var(--on);padding:10px 18px;border-radius:6px;font-weight:600;z-index:9;max-width:90vw}
+footer{max-width:1180px;margin:auto;padding:24px 20px;color:var(--mut);font-size:14px;border-top:1px solid var(--line)}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:32px;padding:36px 0}.app{grid-template-columns:1fr;padding:14px}#nav{flex-direction:row;overflow-x:auto;position:static}#nav button{border-left:0;border-bottom:2px solid transparent;white-space:nowrap}#nav button[aria-current="true"]{border-bottom-color:var(--gold)}.cols,.two{grid-template-columns:1fr}.fc{display:inline-block}}
+@media(max-width:520px){.row{grid-template-columns:1fr}}
+body{background-image:radial-gradient(900px 480px at 85% -8%,color-mix(in srgb,var(--gold) 14%,transparent),transparent)}
+#main h2::after{content:"";display:block;width:48px;height:2px;background:var(--gold);margin-top:8px}
+.stat{position:relative;overflow:hidden}.stat::before{content:"";position:absolute;left:0;top:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.hero .card{box-shadow:0 24px 70px -34px color-mix(in srgb,var(--gold) 55%,transparent)}
+.o{--c:var(--line);border-left:4px solid var(--c)}.o[data-s=new]{--c:var(--gold)}.o[data-s=preparing]{--c:#E8894A}.o[data-s=served]{--c:var(--ok)}
+.oh{display:flex;justify-content:space-between;align-items:center}.sn{font:700 32px "Cormorant Garamond",serif;color:var(--gold);line-height:1}
+.tc{background:var(--surf2);border:1px solid var(--line);border-radius:20px;padding:2px 12px;font-size:13px;font-weight:600}
+.oid{display:block;font:12px monospace;color:var(--mut);margin:4px 0 2px;word-break:break-all}
+.il{list-style:none;margin:10px 0;padding:10px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line)}.il li{display:flex;justify-content:space-between;gap:8px;font-size:15px;padding:2px 0}
+.ot{display:flex;justify-content:space-between;align-items:baseline}.ot b{font:700 26px "Cormorant Garamond",serif;color:var(--gold)}
+.oa{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+@media(prefers-reduced-motion:no-preference){.o,.mi,.stat,.btn{transition:border-color .2s,transform .2s,filter .2s}.o:hover,.mi:hover,.stat:hover{border-color:var(--gold);transform:translateY(-2px)}.btn:hover{transform:translateY(-1px)}}
+#main .th{width:46px;height:46px;border-radius:8px;object-fit:cover;flex:none;background:var(--surf2)}
+.mi img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;background:var(--surf2)}
+.mi .sz{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px dashed var(--line);padding-top:6px;margin-top:4px}
+input[type=file]{padding:8px}
+#bill{display:none}
+@media print{body{background:#fff;padding:0}body>*:not(#bill){display:none!important}#bill{display:block;color:#000;background:#fff;font:14px/1.4 monospace;width:80mm;margin:0 auto;padding:6mm}#bill h1{font:700 20px Georgia,serif;text-align:center;color:#000}#bill p{margin:6px 0}#bill table{width:100%}#bill th,#bill td{padding:2px 0;border:0;color:#000;font-size:13px}#bill th:nth-child(n+2),#bill td:nth-child(n+2){text-align:right}#bill hr{border:0;border-top:1px dashed #000}#bill .rt{text-align:right}#bill .ct{text-align:center}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <span class="logo">Help You</span><span class="sp"></span>
+  <span class="who" id="who" hidden></span>
+  <button class="btn g sm" id="bLogin">Log in</button>
+  <a class="btn sm" id="bReg" href="#register">Register</a>
+  <button class="btn g sm" id="bOut" hidden>Log out</button>
+</div></header>
+
+<div id="landing"><main class="l"><div class="hero">
+  <div>
+    <h1>Every table, order and bill, in one calm place.</h1>
+    <p>Register your restaurant and get a complete order system: live orders, tables, staff accounts, and daily and monthly reports.</p>
+    <ul><li>Waiters take orders, the kitchen sees them instantly</li><li>See which dishes sell most and which sell least</li><li>Create logins for your staff in seconds</li></ul>
+  </div>
+  <div class="card" id="register">
+    <form id="reg" novalidate>
+      <fieldset><legend>Restaurant</legend>
+        <label>Restaurant name *<input name="name" required autocomplete="organization"><span class="err"></span></label>
+        <label>Owner name *<input name="owner" required autocomplete="name"><span class="err"></span></label></fieldset>
+      <fieldset><legend>Address</legend>
+        <label>Street and area *<input name="street" required autocomplete="street-address"><span class="err"></span></label>
+        <div class="row"><label>City *<input name="city" required autocomplete="address-level2"><span class="err"></span></label>
+        <label>PIN code *<input name="pin" required inputmode="numeric" maxlength="6" autocomplete="postal-code"><span class="err"></span></label></div>
+        <label>Google Maps link<input name="maps" type="url" placeholder="Optional"></label></fieldset>
+      <fieldset><legend>Contact</legend>
+        <div class="row"><label>Mobile *<input name="phone" required inputmode="numeric" maxlength="10" autocomplete="tel-national"><span class="err"></span></label>
+        <label>WhatsApp<input name="wa" inputmode="numeric" maxlength="10" placeholder="Optional"></label></div>
+        <label>Email *<input name="email" type="email" required autocomplete="email"><span class="err"></span></label></fieldset>
+      <fieldset><legend>Social media <small>All optional</small></legend>
+        <div class="row"><label>Instagram<input name="ig" placeholder="@handle"></label><label>Facebook<input name="fb" placeholder="Page name"></label></div>
+        <div class="row"><label>YouTube<input name="yt" placeholder="Channel link"></label><label>Website<input name="web" type="url" placeholder="https://"></label></div></fieldset>
+      <fieldset><legend>Password</legend><label>Create password *<input name="pw" type="password" required autocomplete="new-password"><span class="err"></span></label></fieldset>
+      <label class="chk"><input type="checkbox" name="terms"> I agree to the terms and privacy policy</label><span class="err" id="termsErr"></span>
+      <button class="btn w" type="submit" style="margin-top:14px">Register restaurant</button>
+    </form>
+  </div>
+</div></main></div>
+
+<div id="app" class="app" hidden><nav id="nav" aria-label="Sections"></nav><section id="main"></section></div>
+<footer>© 2026 Help You</footer>
+
+<dialog id="login"><h2 style="font-size:32px">Log in</h2>
+  <form id="lf" novalidate style="margin-top:14px">
+    <label>Email<input name="email" type="email" autocomplete="username"><span class="err" id="e1"></span></label>
+    <label>Password<input name="pw" type="password" autocomplete="current-password"><span class="err" id="e2"></span></label>
+    <button class="btn w" type="submit">Log in</button>
+    <span class="err" id="e3" style="margin-top:8px"></span>
+  </form></dialog>
+<div id="bill"></div>
+<div id="toast" role="status" hidden></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getFirestore,doc,setDoc,deleteDoc,updateDoc,addDoc,collection,onSnapshot,query,where,serverTimestamp,runTransaction} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const ADMIN_UID="8bkfMYm9ppSu64c3U7fG3hOrCSl1"; // CHANGE: Firebase console > Authentication > Users > copy your "User UID". Only this account sees ALL restaurants.
+const cfg={apiKey:"AIzaSyB1UA-5bwJle20UjhTYjMGn_l_hq_2NJNM",authDomain:"help-you-9c2a3.firebaseapp.com",projectId:"help-you-9c2a3",storageBucket:"help-you-9c2a3.firebasestorage.app",messagingSenderId:"750631875697",appId:"1:750631875697:web:989c7913d9ed9da82857d0",measurementId:"G-792TXY8RZ9"};
+const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
+const $=q=>document.querySelector(q);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr=n=>'₹'+(+n).toLocaleString('en-IN',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+const day=(d=new Date())=>d.toLocaleDateString('en-CA');
+const E={'auth/email-already-in-use':'This email is already registered. Log in instead.','auth/weak-password':'Password needs at least 6 characters.','auth/invalid-credential':'Email or password is wrong.','auth/network-request-failed':'No internet connection.','permission-denied':'Blocked by Firestore rules. Publish the rules from the setup steps.'};
+const say=e=>E[e.code]||('Error: '+(e.code||e.message));
+let tt;const toast=m=>{const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,3500)};
+
+const S={me:null,rest:null,menu:[],orders:[],staff:[],all:[],tab:'dash',cart:{},table:1};
+let subs=[],vsubs=[],started=false;
+const R=(...p)=>doc(db,'restaurants',S.me.rid,...p),C=(...p)=>collection(db,'restaurants',S.me.rid,...p);
+
+/* ---------- Landing forms ---------- */
+const setErr=(i,m)=>{const e=i.closest('label').querySelector('.err');e.textContent=m||'';i.setAttribute('aria-invalid',!!m);return !m};
+function check(i){const v=i.value.trim(),n=i.name;
+ if(i.required&&!v)return setErr(i,'This field is required.');
+ if(n==='pin'&&!/^\d{6}$/.test(v))return setErr(i,'PIN code must be 6 digits.');
+ if(n==='phone'&&!/^[6-9]\d{9}$/.test(v))return setErr(i,'Enter a 10-digit mobile number.');
+ if(n==='email'&&!/^\S+@\S+\.\S+$/.test(v))return setErr(i,'Enter a valid email.');
+ if(n==='pw'&&v.length<6)return setErr(i,'At least 6 characters.');
+ return setErr(i,'')}
+const f=$('#reg');
+f.addEventListener('input',e=>{if(e.target.getAttribute('aria-invalid')==='true')check(e.target)});
+f.addEventListener('submit',async e=>{e.preventDefault();let ok=true,first=null;
+ f.querySelectorAll('input[required]').forEach(i=>{if(!check(i)){ok=false;first=first||i}});
+ $('#termsErr').textContent=f.terms.checked?'':'Tick the box to continue.';
+ if(!f.terms.checked)ok=false;if(!ok){(first||f.terms).focus();return}
+ const b=f.querySelector('button[type=submit]');b.disabled=true;b.textContent='Registering...';
+ const v=n=>f[n].value.trim();
+ try{const c=await createUserWithEmailAndPassword(auth,v('email'),f.pw.value),u=c.user.uid;
+  await setDoc(doc(db,'restaurants',u),{name:v('name'),owner:v('owner'),cuisines:[],street:v('street'),city:v('city'),pin:v('pin'),maps:v('maps'),phone:v('phone'),wa:v('wa'),email:v('email'),ig:v('ig'),fb:v('fb'),yt:v('yt'),web:v('web'),tables:10,createdAt:serverTimestamp()});
+  await setDoc(doc(db,'users',u),{rid:u,role:'owner',name:v('owner')});f.reset();
+ }catch(x){if(x.code==='auth/email-already-in-use')setErr(f.email,say(x));else toast(say(x))}
+ b.disabled=false;b.textContent='Register restaurant'});
+const dlg=$('#login');$('#bLogin').onclick=()=>dlg.showModal();dlg.onclick=e=>{if(e.target===dlg)dlg.close()};
+$('#lf').addEventListener('submit',async e=>{e.preventDefault();const g=$('#lf'),em=g.email.value.trim(),pw=g.pw.value;
+ $('#e1').textContent=/^\S+@\S+\.\S+$/.test(em)?'':'Enter a valid email.';$('#e2').textContent=pw?'':'Enter your password.';$('#e3').textContent='';
+ if(!/^\S+@\S+\.\S+$/.test(em)||!pw)return;
+ try{await signInWithEmailAndPassword(auth,em,pw);g.reset();dlg.close()}catch(x){$('#e3').textContent=say(x)}});
+$('#bOut').onclick=()=>signOut(auth);
+
+/* ---------- Session ---------- */
+function view(app){$('#landing').hidden=app;$('#app').hidden=!app;$('#bLogin').hidden=app;$('#bReg').hidden=app;$('#bOut').hidden=!app;$('#who').hidden=!app}
+onAuthStateChanged(auth,u=>{subs.forEach(x=>x());subs=[];vsubs.forEach(x=>x());vsubs=[];started=false;Object.assign(S,{me:null,rest:null,menu:[],orders:[],staff:[],all:[],cart:{},view:null,edit:null});
+ if(!u){view(false);return}
+ if(u.uid===ADMIN_UID){S.me={uid:u.uid,role:'admin'};view(true);$('#who').textContent='Admin: all restaurants';
+  subs.push(onSnapshot(collection(db,'restaurants'),s=>{S.all=s.docs.map(d=>({id:d.id,...d.data()}));renderAdmin()},x=>toast(say(x))));return}
+ subs.push(onSnapshot(doc(db,'users',u.uid),s=>{if(!s.exists()||started)return;started=true;S.me={uid:u.uid,...s.data()};start()},x=>toast(say(x))))});
+function start(){view(true);const d30=new Date();d30.setDate(d30.getDate()-31);
+ subs.push(onSnapshot(R(),s=>{S.rest=s.data();$('#who').textContent=(S.rest?.name||'')+' · '+S.me.role;render()},x=>toast(say(x))));
+ subs.push(onSnapshot(C('menu'),s=>{S.menu=s.docs.map(d=>({id:d.id,...d.data()}));render()}));
+ subs.push(onSnapshot(query(C('orders'),where('day','>=',day(d30))),s=>{S.orders=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds??9e9)-(b.createdAt?.seconds??9e9));render()}));
+ if(S.me.role==='owner')subs.push(onSnapshot(C('staff'),s=>{S.staff=s.docs.map(d=>({id:d.id,...d.data()}));render()}))}
+
+/* ---------- Helpers ---------- */
+const sum=a=>a.reduce((s,o)=>s+o.total,0);
+const paid=()=>S.orders.filter(o=>o.status==='paid');
+function itemsBy(list){const m={};S.menu.forEach(i=>m[i.name]=0);list.forEach(o=>o.items.forEach(i=>m[i.name]=(m[i.name]||0)+i.qty));return Object.entries(m).sort((a,b)=>b[1]-a[1])}
+const bars=d=>{const mx=Math.max(1,...d.map(x=>x[1])),w=100/d.length;return `<svg viewBox="0 0 100 50" preserveAspectRatio="none" class="ch" role="img" aria-label="Daily sales chart">${d.map((x,i)=>`<rect x="${i*w+w*.15}" y="${50-x[1]/mx*46}" width="${w*.7}" height="${x[1]/mx*46}" fill="var(--gold)"><title>${x[0]}: ${inr(x[1])}</title></rect>`).join('')}</svg><div class="lbl"><span>${d[0][0].slice(5)}</span><span>${d.at(-1)[0].slice(5)}</span></div>`};
+const hbars=l=>{const mx=Math.max(1,...l.map(x=>x[1]));return l.length?l.map(x=>`<div class="hb"><span>${esc(x[0])}</span><i style="--w:${x[1]/mx*100}%"></i><b>${x[1]}</b></div>`).join(''):'<p style="color:var(--mut)">No items yet.</p>'};
+const tableN=()=>S.rest?.tables||10;
+const gstRate=()=>S.rest?.gstRate??5,useGst=()=>S.gstUse??!!S.rest?.gstOn;
+const cartItems=()=>Object.entries(S.cart).map(([k,qty])=>{const[id,z]=k.split('|'),m=S.menu.find(x=>x.id===id);return m&&{name:m.name,size:m.half?(z==='H'?'Half':'Full'):'',price:z==='H'&&m.half?m.half:m.price,qty}}).filter(Boolean);
+const safeImg=u=>/^(https?:\/\/|data:image\/)/.test(u||'')?u:'';
+const bill=items=>{const sub=items.reduce((s,i)=>s+i.price*i.qty,0),r=useGst()?gstRate():0,gst=Math.round(sub*r)/100;return{sub,gst,gstRate:r,total:Math.round((sub+gst)*100)/100}};
+const timeOf=o=>o.createdAt?new Date(o.createdAt.seconds*1000).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):'now';
+
+/* ---------- Views ---------- */
+function dash(){const t=day(),today=S.orders.filter(o=>o.day===t),pt=paid().filter(o=>o.day===t),open=S.orders.filter(o=>o.status!=='paid');
+ const days=[...Array(14)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-13+i);const k=day(d);return[k,sum(paid().filter(o=>o.day===k))]});
+ const it=itemsBy(today);
+ return `<div class="stats"><div class="stat"><b>${inr(sum(pt))}</b><span>Today's sales</span></div><div class="stat"><b>${today.length}</b><span>Orders today</span></div><div class="stat"><b>${open.length}</b><span>Open orders</span></div><div class="stat"><b>${new Set(open.map(o=>o.table)).size}/${tableN()}</b><span>Tables in use</span></div><div class="stat"><b>${inr(pt.length?sum(pt)/pt.length:0)}</b><span>Average bill</span></div></div>
+ <div class="card"><h3>Sales, last 14 days</h3>${bars(days)}</div>
+ <div class="two"><div class="card"><h3>Top today</h3>${hbars(it.filter(x=>x[1]).slice(0,5))}</div><div class="card"><h3>Slow today</h3>${hbars(it.slice(-5).reverse())}</div></div>`}
+const NEXT={new:['preparing','Start preparing'],preparing:['served','Mark served'],served:['paid','Mark paid']};
+const when=o=>{const t=o.createdAt?new Date(o.createdAt.seconds*1000):new Date();return t.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' · '+t.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})};
+const serial=o=>String(o.orderId||o.id).split('-').at(-1);
+const card=(o,s)=>`<div class="o" data-s="${s}"><div class="oh"><span class="sn">#${esc(serial(o))}</span><span class="tc">Table ${o.table}</span></div><code class="oid">${esc(o.orderId||o.id)}</code><small>${when(o)} · ${esc(o.by||'')}</small><ul class="il">${o.items.map(i=>`<li><span>${esc(i.name)}${i.size?' ('+i.size+')':''} × ${i.qty}</span><span>${inr(i.price*i.qty)}</span></li>`).join('')}</ul><div class="ot"><span>${o.gst?'incl. GST '+inr(o.gst):'Total'}</span><b>${inr(o.total)}</b></div><div class="oa">${S.me.role==='kitchen'&&s==='served'?'':`<button class="btn sm" data-st="${o.id}:${NEXT[s][0]}">${NEXT[s][1]}</button>`}${S.me.role==='kitchen'?'':`<button class="btn g sm" data-print="${o.id}">Print bill</button>`}</div></div>`;
+function orders(){const col=(s,t)=>`<div><h3>${t}</h3>${S.orders.filter(o=>o.status===s).map(o=>card(o,s)).join('')||'<p style="color:var(--mut)">Nothing here.</p>'}</div>`;
+ return `<div class="cols">${col('new','New')}${col('preparing','Preparing')}${col('served','Served, awaiting payment')}</div><div class="card" style="margin-top:14px"><h3>Paid today</h3>${S.orders.filter(o=>o.status==='paid'&&o.day===day()).map(o=>`<div class="ln"><span><b style="color:var(--gold)">#${serial(o)}</b> · Table ${o.table}<small style="display:block;color:var(--mut)">${esc(o.orderId||o.id)} · ${when(o)}</small></span><span>${inr(o.total)} ${S.me.role==='kitchen'?'':`<button class="btn g sm" data-print="${o.id}">Print bill</button>`}</span></div>`).join('')||'<p style="color:var(--mut)">No paid orders yet today.</p>'}</div>`}
+const opt=(m,z,label,price)=>{const k=m.id+'|'+z,q=S.cart[k]||0;return `<div class="sz"><span>${label?label+' · ':''}<span class="pr">${inr(price)}</span></span>${q?`<span class="qty"><button data-dec="${k}" aria-label="Less">−</button>${q}<button data-add="${k}" aria-label="More">+</button></span>`:`<button class="btn sm" data-add="${k}">Add to cart</button>`}</div>`};
+function neworder(){const bl=bill(cartItems()),n=Object.values(S.cart).reduce((a,b)=>a+b,0),tot=bl.sub;
+ const its=Object.entries(S.cart).map(([k,q])=>{const[id,z]=k.split('|'),m=S.menu.find(x=>x.id===id);return m&&{k,q,nm:m.name+(m.half?(z==='H'?' (Half)':' (Full)'):''),pr:z==='H'&&m.half?m.half:m.price}}).filter(Boolean);
+ const lines=its.map(x=>`<div class="ln"><span>${esc(x.nm)}<small style="display:block;color:var(--mut)">${inr(x.pr)} × ${x.q} = ${inr(x.pr*x.q)}</small></span><span class="qty"><button data-dec="${x.k}" aria-label="Less">−</button>${x.q}<button data-add="${x.k}" aria-label="More">+</button><button data-rm="${x.k}" aria-label="Remove ${esc(x.nm)}">×</button></span></div>`).join('');
+ return `<div class="two" style="margin-top:0"><div class="card"><h3>Menu</h3><div class="menu">${S.menu.map(m=>`<div class="mi">${safeImg(m.img)?`<img src="${esc(m.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}<b>${esc(m.name)}</b><small>${esc(m.desc||'')}</small>${m.half?opt(m,'H','Half',m.half)+opt(m,'F','Full',m.price):opt(m,'F','',m.price)}</div>`).join('')||'<p style="color:var(--mut)">Add menu items first.</p>'}</div></div>
+ <div class="card" id="cart"><h3>Cart (${n})</h3><label>Table<select id="tbl">${[...Array(tableN())].map((_,i)=>`<option ${S.table===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label>
+ ${lines||'<p style="color:var(--mut)">Your cart is empty. Tap "Add to cart" on any item.</p>'}
+ <label class="chk" style="margin-top:10px"><input type="checkbox" id="gstc" ${useGst()?'checked':''}> Add GST (${gstRate()}%)</label><div class="ln"><span>Subtotal</span><span>${inr(bl.sub)}</span></div>${bl.gst?`<div class="ln"><span>GST ${bl.gstRate}%</span><span>${inr(bl.gst)}</span></div>`:''}<p style="font-size:20px"><b>Total ${inr(bl.total)}</b></p><button class="btn w" data-place ${tot?'':'disabled'}>Place order</button>${n?'<button class="btn g w" style="margin-top:8px" data-clear>Clear cart</button>':''}</div></div>
+ <button class="btn fc" data-gocart>Cart (${n}) · ${inr(bl.total)}</button>`}
+function menu(){const ed=S.menu.find(m=>m.id===S.edit)||{};return `<div class="two" style="margin-top:0"><div class="card"><h3>${ed.id?'Edit item':'Add item'}</h3><form id="fm"><input type="hidden" name="eid" value="${ed.id||''}"><label>Item name *<input name="n" required value="${esc(ed.name||'')}"></label><label>Description<input name="d" maxlength="120" placeholder="Short description" value="${esc(ed.desc||'')}"></label><div class="row"><label>Full price (₹) *<input name="p" type="number" min="1" step="any" required value="${ed.price||''}"></label><label>Half price (₹) <small>optional</small><input name="h" type="number" min="1" step="any" placeholder="Empty = no half" value="${ed.half||''}"></label></div><label>Category<input name="c" placeholder="Starters" value="${esc(ed.cat||'')}"></label><label>Photo <small>from phone or computer</small><input name="f" type="file" accept="image/*"></label><label>or image link<input name="u" type="url" placeholder="https://..."></label>${safeImg(ed.img)?`<div class="ln"><img class="th" src="${esc(ed.img)}" alt=""><label class="chk" style="margin:0"><input type="checkbox" name="rm"> Remove current photo</label></div>`:''}<button class="btn w" style="margin-top:12px">${ed.id?'Save item':'Add to menu'}</button>${ed.id?'<button type="button" class="btn g w" style="margin-top:8px" data-cancel>Cancel</button>':''}</form>${S.menu.length?'':'<button class="btn g w" style="margin-top:10px" data-seed>Add sample menu</button>'}</div>
+ <div class="card"><h3>Menu (${S.menu.length})</h3>${S.menu.map(m=>`<div class="ln">${safeImg(m.img)?`<img class="th" src="${esc(m.img)}" alt="" loading="lazy">`:''}<span style="flex:1">${esc(m.name)} <small style="color:var(--mut)">${esc(m.cat||'')}</small><small style="display:block;color:var(--mut)">${esc(m.desc||'')}</small></span><span style="text-align:right">${m.half?'Half '+inr(m.half)+' · Full '+inr(m.price):inr(m.price)} <button data-edit="${m.id}" aria-label="Edit ${esc(m.name)}">✎</button> <button data-del="menu:${m.id}" aria-label="Delete ${esc(m.name)}">×</button></span></div>`).join('')}</div></div>`}
+function tables(){const open=S.orders.filter(o=>o.status!=='paid');
+ return `<div class="tb">${[...Array(tableN())].map((_,i)=>{const o=open.filter(x=>x.table===i+1);return `<div class="${o.length?'on':''}"><b>${i+1}</b><br>${o.length?inr(sum(o))+'<br><small>'+o.length+' order(s)</small>':'<small style="color:var(--mut)">Free</small>'}</div>`}).join('')}</div>
+ ${S.me.role==='owner'?`<form id="ft" class="card" style="margin-top:16px;max-width:300px"><label>Total tables<input name="t" type="number" min="1" max="200" value="${tableN()}"></label><button class="btn w">Save</button></form>`:''}`}
+function staff(){return `<div class="two" style="margin-top:0"><div class="card"><h3>Create staff account</h3><form id="fs"><label>Name<input name="n" required></label><label>Email<input name="e" type="email" required></label><div class="row"><label>Password<input name="p" type="password" minlength="6" required></label><label>Role<select name="r"><option value="waiter">Waiter</option><option value="kitchen">Kitchen</option></select></label></div><button class="btn w">Create account</button></form></div>
+ <div class="card"><h3>Your staff (${S.staff.length})</h3>${S.staff.map(m=>`<div class="ln"><span>${esc(m.name)}<small style="display:block;color:var(--mut)">${esc(m.email)} · ${m.role}</small></span><button data-del="staff:${m.id}" aria-label="Remove ${esc(m.name)}">×</button></div>`).join('')||'<p style="color:var(--mut)">No staff yet.</p>'}</div></div>`}
+function reports(){const mo=day().slice(0,7),list=paid().filter(o=>o.day.startsWith(mo)),it=itemsBy(list),dm={};list.forEach(o=>{(dm[o.day]??={n:0,s:0,g:0}).n++;dm[o.day].s+=o.total;dm[o.day].g+=o.gst||0});
+ return `<div class="stats"><div class="stat"><b>${inr(sum(list))}</b><span>Sales this month</span></div><div class="stat"><b>${list.length}</b><span>Paid orders</span></div><div class="stat"><b>${inr(list.reduce((a,o)=>a+(o.gst||0),0))}</b><span>GST collected</span></div><div class="stat"><b>${inr(list.length?sum(list)/list.length:0)}</b><span>Average bill</span></div></div>
+ <div class="two" style="margin-top:0"><div class="card"><h3>In demand</h3>${hbars(it.filter(x=>x[1]).slice(0,8))}</div><div class="card"><h3>Selling least</h3>${hbars(it.slice(-8).reverse())}</div></div>
+ <div class="card" style="margin-top:14px"><h3>Day-wise report</h3><table><tr><th>Date</th><th>Orders</th><th>Sales</th><th>GST</th></tr>${Object.entries(dm).sort().reverse().map(([d,v])=>`<tr><td>${d}</td><td>${v.n}</td><td>${inr(v.s)}</td><td>${inr(v.g)}</td></tr>`).join('')||'<tr><td colspan="4" style="color:var(--mut)">No paid orders this month.</td></tr>'}</table></div>`}
+const CUIS=['North Indian','South Indian','Chinese','Fast food','Street food','Bakery and cafe','Biryani','Pizza','Italian','Mughlai','Desserts','Beverages'];
+const cuisineForm=r=>{const cur=r.cuisines||[];return `<form id="fcu" class="card" style="max-width:520px"><h3>Cuisines</h3><p style="color:var(--mut);margin:0 0 12px">Select every cuisine you serve.</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:12px">${CUIS.map(c=>`<label class="chk" style="margin:0"><input type="checkbox" name="cu" value="${c}" ${cur.includes(c)?'checked':''}> ${c}</label>`).join('')}</div><label>Other cuisines <small>(comma separated)</small><input name="oth" value="${esc(cur.filter(c=>!CUIS.includes(c)).join(', '))}"></label><button class="btn w">Save cuisines</button></form>`};
+function settings(){const r=S.rest||{};return cuisineForm(r)+`<form id="fg" class="card" style="max-width:520px;margin-top:14px"><h3>GST</h3><p style="color:var(--mut);margin:0 0 14px">Turn GST on when you want it added to bills. You can still switch it on or off for each bill on the New order screen.</p>
+ <label class="chk" style="margin-bottom:14px"><input type="checkbox" name="gon" ${r.gstOn?'checked':''}> Add GST to bills by default</label>
+ <div class="row"><label>GST rate (%)<input name="gr" type="number" min="0" max="40" step="0.5" value="${r.gstRate??5}"></label><label>GSTIN <small>(optional)</small><input name="gstin" maxlength="15" value="${esc(r.gstin||'')}"></label></div>
+ <button class="btn w">Save GST settings</button></form>`}
+const T={dash:['Dashboard',dash],orders:['Orders',orders],new:['New order',neworder],menu:['Menu',menu],tables:['Tables',tables],staff:['Staff',staff],reports:['Reports',reports],settings:['Settings',settings]};
+const ROLE={owner:Object.keys(T),waiter:['orders','new','tables'],kitchen:['orders']};
+const IC={dash:'◈',orders:'🧾',new:'🛒',menu:'📖',tables:'🪑',staff:'👥',reports:'📈',settings:'⚙️'};
+function render(force){if(!S.me||!S.rest||S.me.role==='admin')return;const a=document.activeElement;
+ if(!force&&a&&$('#main').contains(a)&&/INPUT|SELECT/.test(a.tagName))return;
+ const tabs=ROLE[S.me.role]||['orders'];if(!tabs.includes(S.tab))S.tab=tabs[0];
+ $('#nav').innerHTML=tabs.map(k=>`<button data-tab="${k}" aria-current="${k===S.tab}">${IC[k]||''} ${T[k][0]}</button>`).join('');
+ $('#main').innerHTML=`<h2>${T[S.tab][0]}</h2>`+T[S.tab][1]()}
+function renderAdmin(){
+ if(S.view){S.rest=S.all.find(r=>r.id===S.view)||S.rest;const r=S.rest||{};
+  $('#nav').innerHTML='<button data-back="1">← All restaurants</button>';
+  $('#main').innerHTML=`<h2>${esc(r.name)}</h2><p style="color:var(--mut);margin:-8px 0 16px">ID ${esc(r.id)} · ${esc([r.street,r.city,r.pin].filter(Boolean).join(', '))} · +91 ${esc(r.phone)} · ${esc(r.email)}${r.gstin?' · GSTIN '+esc(r.gstin):''}</p>`+dash()
+   +`<div class="card" style="margin-top:14px;overflow-x:auto"><h3>Latest orders</h3><table><tr><th>Order ID</th><th>Date and time</th><th>Table</th><th>Status</th><th>Total</th></tr>${[...S.orders].reverse().slice(0,10).map(o=>`<tr><td>${esc(o.orderId||o.id)}</td><td>${when(o)}</td><td>${o.table}</td><td>${o.status}</td><td>${inr(o.total)}</td></tr>`).join('')||'<tr><td colspan="5" style="color:var(--mut)">No orders yet.</td></tr>'}</table></div><h2 style="margin-top:28px">Monthly report</h2>`+reports();return}
+ $('#nav').innerHTML='<button aria-current="true">Restaurants</button>';
+ const rs=[...S.all].sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+ $('#main').innerHTML=`<h2>All restaurants</h2><div class="stats"><div class="stat"><b>${rs.length}</b><span>Registered</span></div></div><div class="card" style="overflow-x:auto"><table><tr><th>ID</th><th>Restaurant</th><th>Owner</th><th>City</th><th>Cuisines</th><th>Mobile</th><th>Email</th><th>Joined</th><th></th></tr>${rs.map(r=>`<tr><td><code>${esc(r.id.slice(0,6).toUpperCase())}</code></td><td>${esc(r.name)}</td><td>${esc(r.owner)}</td><td>${esc(r.city)}</td><td>${esc((r.cuisines||[]).join(', '))}</td><td>${esc(r.phone)}</td><td>${esc(r.email)}</td><td>${r.createdAt?new Date(r.createdAt.seconds*1000).toLocaleDateString('en-IN'):''}</td><td><button class="btn g sm" data-view="${r.id}">View sales</button></td></tr>`).join('')}</table></div>`}
+function openRest(id){vsubs.forEach(x=>x());vsubs=[];S.view=id;S.orders=[];S.menu=[];S.rest=S.all.find(r=>r.id===id);
+ const d30=new Date();d30.setDate(d30.getDate()-31);const rc=(...p)=>collection(db,'restaurants',id,...p);
+ vsubs.push(onSnapshot(query(rc('orders'),where('day','>=',day(d30))),s=>{S.orders=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds??9e9)-(b.createdAt?.seconds??9e9));renderAdmin()},x=>toast(say(x))));
+ vsubs.push(onSnapshot(rc('menu'),s=>{S.menu=s.docs.map(d=>({id:d.id,...d.data()}));renderAdmin()},x=>toast(say(x))));renderAdmin()}
+function closeRest(){vsubs.forEach(x=>x());vsubs=[];S.view=null;S.orders=[];S.menu=[];S.rest=null;renderAdmin()}
+function shrink(file){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(file);im.onload=()=>{const k=Math.min(1,480/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.72))};im.onerror=()=>no(new Error('This file is not a valid image.'));im.src=u})}
+function printBill(id){const o=S.orders.find(x=>x.id===id),r=S.rest||{};if(!o)return;const dt=o.createdAt?new Date(o.createdAt.seconds*1000):new Date();
+ $('#bill').innerHTML=`<h1>${esc(r.name)}</h1><p class="ct">${esc([r.street,r.city,r.pin].filter(Boolean).join(', '))}${r.phone?'<br>Ph: +91 '+esc(r.phone):''}${r.gstin?'<br>GSTIN: '+esc(r.gstin):''}</p><hr><p>Bill no: <b>${esc(o.orderId||o.id)}</b><br>Date: ${dt.toLocaleString('en-IN')}<br>Table: ${o.table}</p><table><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amt</th></tr>${o.items.map(i=>`<tr><td>${esc(i.name)}${i.size?' ('+i.size+')':''}</td><td>${i.qty}</td><td>${inr(i.price)}</td><td>${inr(i.price*i.qty)}</td></tr>`).join('')}</table><hr><p class="rt">Subtotal: ${inr(o.sub??o.total)}<br>${o.gst?`GST ${o.gstRate}%: ${inr(o.gst)}<br>`:''}<b>Total: ${inr(o.total)}</b></p><hr><p class="ct">Thank you, visit again!</p>`;
+ window.print()}
+
+/* ---------- Actions ---------- */
+$('#app').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b||!S.me)return;const d=b.dataset;
+ try{
+ if(d.tab){S.tab=d.tab;render(true)}
+ else if(d.print){printBill(d.print)}
+ else if(d.view){openRest(d.view)}
+ else if(d.back!==undefined){closeRest()}
+ else if(d.edit){S.edit=d.edit;render(true)}
+ else if(d.cancel){S.edit=null;render(true)}
+ else if(d.gocart){$('#cart')?.scrollIntoView({behavior:'smooth'})}
+ else if(d.clear){S.cart={};render(true)}
+ else if(d.rm){delete S.cart[d.rm];render(true)}
+ else if(d.add){S.cart[d.add]=(S.cart[d.add]||0)+1;render(true)}
+ else if(d.dec){if(--S.cart[d.dec]<=0)delete S.cart[d.dec];render(true)}
+ else if(d.st){const[id,s]=d.st.split(':');await updateDoc(R('orders',id),{status:s})}
+ else if(d.place){const items=cartItems();
+  const t=S.table,bl=bill(items),dk=day();
+  const oid=await runTransaction(db,async tx=>{const cr=R('counters',dk),sn=await tx.get(cr),n=(sn.exists()?sn.data().n:0)+1,tm=new Date(),hm=String(tm.getHours()).padStart(2,'0')+String(tm.getMinutes()).padStart(2,'0'),id=S.me.rid.slice(0,6).toUpperCase()+'-'+dk.slice(2).replace(/-/g,'')+'-'+hm+'-'+String(n).padStart(4,'0');
+   tx.set(cr,{n});tx.set(R('orders',id),{orderId:id,rid:S.me.rid,table:t,items,...bl,status:'new',day:dk,by:S.me.name||S.me.role,createdAt:serverTimestamp()});return id});
+  S.cart={};S.gstUse=undefined;toast('Order '+oid+' placed for table '+t);render(true)}
+ else if(d.seed){for(const[n,p,c]of[['Paneer Tikka',280,'Starters'],['Veg Biryani',240,'Mains'],['Butter Naan',50,'Breads'],['Dal Makhani',260,'Mains'],['Gulab Jamun',90,'Dessert'],['Masala Chai',40,'Drinks']])await addDoc(C('menu'),{name:n,price:p,cat:c,desc:{'Paneer Tikka':'Char-grilled cottage cheese with spices','Veg Biryani':'Fragrant basmati rice with vegetables','Butter Naan':'Soft tandoor bread with butter','Dal Makhani':'Slow-cooked black lentils in cream','Gulab Jamun':'Milk dumplings in sugar syrup','Masala Chai':'Spiced Indian tea'}[n],half:({'Paneer Tikka':160,'Veg Biryani':140,'Dal Makhani':150}[n]||0)})}
+ else if(d.del){const[k,id]=d.del.split(':');await deleteDoc(R(k,id));if(k==='staff')await deleteDoc(doc(db,'users',id))}
+ }catch(x){toast(say(x))}});
+$('#app').addEventListener('change',e=>{if(e.target.id==='tbl')S.table=+e.target.value;if(e.target.id==='gstc'){S.gstUse=e.target.checked;render(true)}});
+$('#app').addEventListener('submit',async e=>{e.preventDefault();const g=e.target,id=g.id;
+ try{
+ if(id==='fm'){const old=S.menu.find(m=>m.id===g.eid.value)||{};let img=old.img||'';
+  if(g.rm&&g.rm.checked)img='';
+  const fl=g.f.files[0],url=g.u.value.trim();
+  if(fl){if(fl.size>8e6){toast('Photo is too large (max 8 MB).');return}img=await shrink(fl)}
+  else if(url){if(!/^https?:\/\//.test(url)){toast('Image link must start with https://');return}img=url}
+  const pr=+g.p.value,hf=+g.h.value||0;if(hf&&hf>=pr){toast('Half price must be less than full price.');return}
+  const dt={name:g.n.value.trim(),desc:g.d.value.trim(),price:pr,half:hf,cat:g.c.value.trim(),img};
+  if(g.eid.value)await updateDoc(R('menu',g.eid.value),dt);else await addDoc(C('menu'),dt);S.edit=null;render(true)}
+ else if(id==='ft'){await updateDoc(R(),{tables:Math.max(1,Math.min(200,+g.t.value||10))});toast('Tables saved')}
+ else if(id==='fcu'){const l=[...g.querySelectorAll('input[name=cu]:checked')].map(x=>x.value).concat(g.oth.value.split(',').map(x=>x.trim()).filter(Boolean));await updateDoc(R(),{cuisines:[...new Set(l)]});toast('Cuisines saved')}
+ else if(id==='fg'){await updateDoc(R(),{gstOn:g.gon.checked,gstRate:Math.max(0,Math.min(40,+g.gr.value||0)),gstin:g.gstin.value.trim().toUpperCase()});toast('GST settings saved')}
+ else if(id==='fs'){const{getAuth:ga}={getAuth};let sec;try{sec=initializeApp(cfg,'sec')}catch{sec=(await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js")).getApp('sec')}
+  const sa=ga(sec),c=await createUserWithEmailAndPassword(sa,g.e.value.trim(),g.p.value);await signOut(sa);
+  await setDoc(doc(db,'users',c.user.uid),{rid:S.me.rid,role:g.r.value,name:g.n.value.trim()});
+  await setDoc(R('staff',c.user.uid),{name:g.n.value.trim(),email:g.e.value.trim(),role:g.r.value});g.reset();toast('Staff account created')}
+ }catch(x){toast(say(x))}});
+</script>
+</body>
+</html>
