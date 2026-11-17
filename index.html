@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Help You – Restaurant management</title>
-<script>if(new URLSearchParams(location.search).get('r'))document.documentElement.classList.add('cm')</script>
+<script>document.documentElement.classList.add('cm')</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -215,11 +215,6 @@ html.cm h1,html.cm h2,html.cm h3,html.cm .logo2,html.cm .sn,html.cm .ot b{font-f
 .catb{background:none;border:0;color:var(--ink);cursor:pointer;display:grid;justify-items:center;gap:8px;min-width:84px;font:inherit;padding:0}
 .catp{width:78px;height:78px;border-radius:50%;background:var(--surf);border:1px solid var(--line);display:grid;place-items:center;font-size:36px;overflow:hidden;transition:transform .3s,border-color .3s}.catp img{width:100%;height:100%;object-fit:cover;display:block}
 .catb b{font-weight:500;font-size:13px}.catb:hover .catp{transform:translateY(-3px);border-color:var(--gold)}.catb.on .catp{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,182,107,.25)}.catb.on b{color:var(--gold)}
-.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
-.rc{display:flex;gap:14px;align-items:center;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none;color:var(--ink);transition:transform .3s,border-color .3s}
-.rc:hover{transform:translateY(-3px);border-color:var(--gold)}
-.rcp{width:76px;height:76px;border-radius:12px;flex:none;background:var(--surf2) center/cover no-repeat;display:grid;place-items:center;font:700 32px "Cormorant Garamond",serif;color:var(--gold);border:1px solid var(--line)}
-.rc h3{font-size:24px}.rc small{color:var(--mut);display:block;margin:2px 0 6px}
 #bill{display:none}
 @media print{body{background:#fff;padding:0}body>*:not(#bill){display:none!important}#bill{display:block;color:#000;background:#fff;font:14px/1.4 monospace;width:80mm;margin:0 auto;padding:6mm}#bill h1{font:700 20px Georgia,serif;text-align:center;color:#000}#bill p{margin:6px 0}#bill table{width:100%}#bill th,#bill td{padding:2px 0;border:0;color:#000;font-size:13px}#bill th:nth-child(n+2),#bill td:nth-child(n+2){text-align:right}#bill hr{border:0;border-top:1px dashed #000}#bill .rt{text-align:right}#bill .ct{text-align:center}#bill.qrp{width:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:8mm;padding:8mm;font-family:Georgia,serif}#bill.qrp .qc{border:1px solid #000;padding:6mm;text-align:center;break-inside:avoid}#bill.qrp .qc h2{font:700 20px Georgia,serif;color:#000;margin:0 0 6px}#bill.qrp .qc img{width:48mm;height:48mm}}
 </style>
@@ -228,7 +223,6 @@ html.cm h1,html.cm h2,html.cm h3,html.cm .logo2,html.cm .sn,html.cm .ot b{font-f
 <header><div class="bar">
   <span class="logo">Help You</span><span class="sp"></span>
   <span class="who" id="who" hidden></span><button class="btn g sm" id="bSnd" hidden></button>
-  <a class="btn g sm" id="bFind" href="#find">Find food</a>
   <button class="btn g sm" id="bLogin">Log in</button>
   <a class="btn sm" id="bReg" href="#register">Register</a>
   <button class="btn g sm" id="bOut" hidden>Log out</button>
@@ -239,7 +233,7 @@ html.cm h1,html.cm h2,html.cm h3,html.cm .logo2,html.cm .sn,html.cm .ot b{font-f
     <span class="pill">For restaurants, cafes and street-food shops</span>
     <h1>Every table, order and bill, in one calm place.</h1>
     <p>Register your restaurant and get a complete order system: a QR menu for customers, live orders for the kitchen, staff accounts, UPI payments, and daily and monthly reports.</p>
-    <div class="ctas"><a class="btn" href="#register">Register your restaurant</a><a class="btn g" href="#find">Order food</a><button class="btn g" type="button" id="heroLogin">Log in</button></div>
+    <div class="ctas"><a class="btn" href="#register">Register your restaurant</a><button class="btn g" type="button" id="heroLogin">Log in</button></div>
     <ul><li>Customers scan a QR code, see your menu with photos, and order from their phone</li><li>Kitchen gets a chime for every new order, and every order shows Delivered and Paid</li><li>See which dishes sell most and which sell least</li></ul>
     <svg class="thali" viewBox="0 0 320 320" role="img" aria-label="Illustration of a plate with Indian dishes"><defs><radialGradient id="pg" cx=".5" cy=".4"><stop offset="0" stop-color="#4a3556"/><stop offset="1" stop-color="#1c1222"/></radialGradient></defs>
      <circle cx="160" cy="160" r="152" class="gs" fill="none" stroke-width="2" opacity=".45"/><circle cx="160" cy="160" r="138" fill="url(#pg)" class="gs" stroke-width="6"/><circle cx="160" cy="160" r="120" class="gs" fill="none" stroke-width="1" stroke-dasharray="3 6" opacity=".6"/>
@@ -273,11 +267,6 @@ html.cm h1,html.cm h2,html.cm h3,html.cm .logo2,html.cm .sn,html.cm .ot b{font-f
     </form>
   </div>
 </div>
-<section class="sec" id="find"><h2 class="sh">Hungry? <em style="font-style:italic;color:var(--gold)">Order</em> from a restaurant</h2><p class="sub">Tap a restaurant to see its menu, today's special and order from your phone.</p>
- <div class="srow"><input id="rq" type="search" placeholder="Search restaurant, food or city..." autocomplete="off"></div>
- <div class="chips" id="rcity" style="flex-wrap:wrap;margin-bottom:14px"></div>
- <div class="rgrid" id="rlist"><p class="mut">Loading restaurants...</p></div></section>
-
 <section class="sec" id="features"><h2 class="sh">Everything your restaurant needs</h2><p class="sub">One simple system for the counter, the kitchen and your customer's phone.</p>
  <div class="fgrid">
   <div class="ft" style="--c:#E8A33B"><i>📱</i><h3>QR menu and ordering</h3><p>Every table gets its own QR code. Customers see photos, Veg or Non-veg, Half and Full prices, and order without installing an app.</p></div>
@@ -318,7 +307,7 @@ html.cm h1,html.cm h2,html.cm h3,html.cm .logo2,html.cm .sn,html.cm .ot b{font-f
 </main></div>
 
 <div id="app" class="app" hidden><nav id="nav" aria-label="Sections"></nav><section id="main"></section></div>
-<div style="position:fixed;left:12px;bottom:12px;z-index:99;background:#D9B66B;color:#1A1208;font:600 12px Inter,sans-serif;padding:6px 12px;border-radius:20px;letter-spacing:.04em;pointer-events:none">PREVIEW · sample restaurants · nothing is saved</div>
+<div style="position:fixed;left:12px;bottom:12px;z-index:99;background:#D9B66B;color:#1A1208;font:600 12px Inter,sans-serif;padding:6px 12px;border-radius:20px;letter-spacing:.04em;pointer-events:none">PREVIEW · sample data · nothing is saved</div>
 <div id="cust" hidden></div>
 <dialog id="lb"><button type="button" id="lbx" aria-label="Close" style="position:absolute;top:8px;right:8px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.7);color:#fff;font-size:24px;cursor:pointer">×</button><img id="lbimg" alt=""></dialog>
 <footer>© 2026 Help You</footer>
@@ -337,21 +326,38 @@ html.cm h1,html.cm h2,html.cm h3,html.cm .logo2,html.cm .sn,html.cm .ot b{font-f
 <div id="toast" role="status" hidden></div>
 
 <script type="module">
-/* ---- PREVIEW: sample restaurants, no Firebase, nothing is saved ---- */
-const svg=(e,c1,c2)=>'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="300" height="300" fill="url(#g)"/><text x="150" y="195" font-size="130" text-anchor="middle">${e}</text></svg>`);
-const SAMPLE=[
- {id:'a',name:'Aurum Kitchen',city:'Hajipur',cuisines:['Street food','Biryani','Rolls'],open:true,live:true,thumb:svg('🍛','#6b2d12','#1a0e08')},
- {id:'b',name:'Momo House',city:'Hajipur',cuisines:['Momo','Chinese'],open:true,live:true,thumb:svg('🥟','#5a3a12','#140d05')},
- {id:'c',name:'Zaika Rolls',city:'Patna',cuisines:['Rolls','Sandwich'],open:true,live:true,thumb:svg('🌯','#5e2a1a','#170c08')},
- {id:'d',name:'Spice Villa',city:'Patna',cuisines:['North Indian','Mughlai'],open:false,live:true},
- {id:'e',name:'Chai & Toast',city:'Muzaffarpur',cuisines:['Cafe','Sandwich'],open:true,live:true,thumb:svg('☕','#3d3a1a','#12110a')}];
+/* ---- PREVIEW: sample data, no Firebase, nothing is saved ---- */
+const svg=(e,a,b,w=600,h=450,fs=150)=>'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="${w}" height="${h}" fill="url(#g)"/><text x="${w/2}" y="${h*0.62}" font-size="${fs}" text-anchor="middle">${e}</text></svg>`);
+const INFO={name:'Aurum Kitchen',street:'12, Gandhi Road',city:'Hajipur',pin:'844101',phone:'9876543210',wa:'9876543210',maps:'https://maps.google.com',ig:'aurumkitchen',cuisines:['Street food','Biryani','Rolls'],tables:8,open:true,upi:'aurum@upi',upiName:'Aurum Kitchen',gw:false};
+const MENU=[
+ {id:'m1',name:'Veg Steamed Momo',desc:'Hand-folded, served with spicy red chutney',price:120,half:70,veg:'veg',cat:'Momo',today:true,img:svg('🥟','#5a3a12','#1a1208')},
+ {id:'m2',name:'Chicken Fried Momo',desc:'Crisp-fried, tossed in chilli garlic',price:160,half:90,veg:'non',cat:'Momo',sig:true,img:svg('🥟','#6b2d12','#1a0e08')},
+ {id:'m3',name:'Grilled Veg Sandwich',desc:'Toasted with cheese, mint chutney',price:110,veg:'veg',cat:'Sandwich',sig:true,img:svg('🥪','#4d3a1a','#17110a')},
+ {id:'m4',name:'Club Sandwich',desc:'Triple layer, chicken, egg, salad',price:150,veg:'non',cat:'Sandwich',img:svg('🥪','#3f2a14','#120d08')},
+ {id:'m5',name:'Chicken Biryani',desc:'Dum-cooked rice with spiced chicken',price:320,half:180,veg:'non',cat:'Biryani',today:true,sig:true,img:svg('🍛','#6b2d12','#1a0e08')},
+ {id:'m6',name:'Veg Biryani',desc:'Fragrant basmati with garden vegetables',price:240,half:140,veg:'veg',cat:'Biryani',img:svg('🍛','#5b3414','#160e07')},
+ {id:'m7',name:'Paneer Roll',desc:'Tandoori paneer, onions, mint in a rumali',price:100,veg:'veg',cat:'Rolls',sig:true,img:svg('🌯','#5e2a1a','#170c08')},
+ {id:'m8',name:'Egg Roll',desc:'Double egg, onion, green chutney',price:90,veg:'non',cat:'Rolls',img:svg('🌯','#4a3513','#120e08')},
+ {id:'m9',name:'Chicken Roll',desc:'Smoky chicken tikka with crunchy salad',price:130,veg:'non',cat:'Rolls',img:svg('🌯','#5a2a10','#140a05')},
+ {id:'m10',name:'Masala Chai',desc:'Spiced Indian tea',price:40,veg:'veg',cat:'Drinks',img:svg('🍵','#3d3a1a','#12110a')},
+ {id:'m11',name:'Cold Coffee',desc:'Thick, chilled, with ice cream',price:120,veg:'veg',cat:'Drinks',img:svg('🥤','#3a2a1d','#0e0a07')}];
+const SITE_D={heroTitle:'Taste the Art of *Street Food*',heroSub:'Momo, rolls, sandwiches and biryani made fresh to order. Come hungry, stay a while.',heroImg:svg('✨','#3a2a10','#0a0908',1400,800,260),aboutTitle:'Made with *care*',aboutText:'We believe good street food deserves a proper table. Every plate starts with fresh ingredients and a hot kitchen.\n\nCome for a quick bite or a long evening with friends.',aboutImg:svg('🍽️','#4a3513','#120e08',900,675,200),hours:'Mon to Sun\n12:00 PM to 11:00 PM'};
+const BLOCKS=[{id:'c1',type:'category',title:'Momo',img:svg('🥟','#6b4a1a','#1c1209',200,200,110),order:1},{id:'c2',type:'category',title:'Biryani',img:svg('🍛','#6b2d12','#1a0e08',200,200,110),order:2},
+ {id:'g1',type:'gallery',img:svg('🔥','#5a2a10','#140a05',800,800,260),order:3},{id:'g2',type:'gallery',img:svg('🥟','#5a3a12','#140d05'),order:4},{id:'g3',type:'gallery',img:svg('🌿','#1f3a1c','#08120a'),order:5},{id:'g4',type:'gallery',img:svg('🕯️','#4a3a14','#120e06'),order:6},{id:'g5',type:'gallery',img:svg('🌯','#3a3a4a','#0c0c12'),order:7},
+ {id:'e1',type:'event',title:'Momo Night',when:'Every Friday, 7 PM',desc:'Unlimited momo platter at a fixed price.',img:svg('🥟','#3a1d4a','#0c0612',800,450,150),order:8},
+ {id:'e2',type:'event',title:'Sunday Family Brunch',when:'Sundays, 11 AM to 3 PM',desc:'Rolls, sandwiches and chai for the whole family.',order:9}];
+const snapOf=p=>{const ex=v=>({exists:()=>true,data:()=>v}),dd=a=>({docs:a.map(m=>({id:m.id,data:()=>{const{id,...r}=m;return r}}))});
+ if(p==='public/DEMO')return ex(INFO);if(p==='status/DEMO')return ex({stage:'live'});if(p==='public/DEMO/site/main')return ex(SITE_D);
+ if(p==='restaurants/DEMO/menu')return dd(MENU);if(p==='public/DEMO/blocks')return dd(BLOCKS);
+ return{exists:()=>false,docs:[],data:()=>({})}};
 const initializeApp=()=>({}),getAuth=()=>({currentUser:null}),getFirestore=()=>({}),getFunctions=()=>({}),httpsCallable=()=>async()=>({data:{}});
-const prev=async()=>{const e=new Error('Preview only. Nothing is saved.');e.code='functions/preview';throw e};
-const createUserWithEmailAndPassword=prev,signInWithEmailAndPassword=prev,signOut=async()=>{},deleteUser=async()=>{},onAuthStateChanged=()=>{},sendEmailVerification=async()=>{},sendPasswordResetEmail=prev;
-const doc=(...a)=>a.filter(x=>typeof x==='string').join('/'),collection=doc,query=r=>r,where=()=>0,limit=()=>0,serverTimestamp=()=>new Date(),arrayUnion=(...a)=>a;
-const setDoc=async()=>{},updateDoc=async()=>{},addDoc=async()=>({}),deleteDoc=async()=>{},runTransaction=async()=>'',writeBatch=()=>({set(){},update(){},delete(){},commit:async()=>{}});
-const getDoc=async()=>({exists:()=>false}),onSnapshot=()=>()=>{};
-const getDocs=async()=>({docs:SAMPLE.map(m=>({id:m.id,data:()=>{const{id,...r}=m;return r}}))});
+const createUserWithEmailAndPassword=async()=>({}),signInWithEmailAndPassword=async()=>({}),signOut=async()=>{},deleteUser=async()=>{},onAuthStateChanged=()=>{},sendEmailVerification=async()=>{},sendPasswordResetEmail=async()=>{};
+const doc=(...a)=>a.filter(x=>typeof x==='string').join('/'),collection=doc,query=r=>r,where=()=>0,serverTimestamp=()=>new Date(),arrayUnion=(...a)=>a;
+const setDoc=async()=>{},updateDoc=async()=>{},addDoc=async()=>({}),deleteDoc=async()=>{},runTransaction=async()=>'DEMO',writeBatch=()=>({set(){},update(){},delete(){},commit:async()=>{}});
+const getDoc=async()=>({exists:()=>true,data:()=>({ids:['AUR-261112-2000-DEMO']})});
+const onSnapshot=(ref,cb)=>{setTimeout(()=>{
+  if(String(ref).includes('/track/')){const st=String(ref).endsWith('DEMO')?'served':'pending';cb({exists:()=>true,data:()=>({status:st,table:3,total:250,items:'Chicken Biryani (Half) × 1, Masala Chai × 2',t:Date.now()})});if(st==='pending'){setTimeout(()=>cb({exists:()=>true,data:()=>({status:'preparing'})}),4000);setTimeout(()=>cb({exists:()=>true,data:()=>({status:'served'})}),9000)}}
+  else cb(snapOf(String(ref)))},0);return()=>{}};
 
 
 
@@ -363,7 +369,7 @@ const cfg={apiKey:"AIzaSyB1UA-5bwJle20UjhTYjMGn_l_hq_2NJNM",authDomain:"help-you
 const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
 const fnc=getFunctions(app,'asia-south1'),call=(n,d)=>httpsCallable(fnc,n)(d).then(r=>r.data);
 const $=q=>document.querySelector(q);
-const Q=new URLSearchParams(location.search),RID=Q.get('r'),CUST=!!RID;
+const Q=new URLSearchParams('r=DEMO&t=3&k=demokey123456'),RID=Q.get('r'),CUST=!!RID;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr=n=>'₹'+(+n).toLocaleString('en-IN',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
 const day=(d=new Date())=>d.toLocaleDateString('en-CA');
@@ -406,11 +412,11 @@ $('#lf').addEventListener('submit',async e=>{e.preventDefault();const g=$('#lf')
 $('#bOut').onclick=()=>signOut(auth);
 
 /* ---------- Session ---------- */
-function view(app){$('#landing').hidden=app;$('#app').hidden=!app;$('#bLogin').hidden=app;$('#bReg').hidden=app;$('#bOut').hidden=!app;$('#who').hidden=!app;$('#bSnd').hidden=!app;$('#bFind').hidden=app}
-if(!CUST)onAuthStateChanged(auth,u=>{clearTimeout(orph);if(u&&u.phoneNumber&&!u.email){signOut(auth);return}subs.forEach(x=>x());subs=[];vsubs.forEach(x=>x());vsubs=[];started=false;Object.assign(S,{me:null,rest:null,menu:[],orders:[],staff:[],all:[],cart:{},view:null,edit:null,pubJ:'',ready:false,pc:0,seen:new Set(),stat:null,sts:{},dirs:{},dirsLoaded:false,tk:null,statLoaded:false,site:null,blocks:[]});
+function view(app){$('#landing').hidden=app;$('#app').hidden=!app;$('#bLogin').hidden=app;$('#bReg').hidden=app;$('#bOut').hidden=!app;$('#who').hidden=!app;$('#bSnd').hidden=!app}
+if(!CUST)onAuthStateChanged(auth,u=>{clearTimeout(orph);if(u&&u.phoneNumber&&!u.email){signOut(auth);return}subs.forEach(x=>x());subs=[];vsubs.forEach(x=>x());vsubs=[];started=false;Object.assign(S,{me:null,rest:null,menu:[],orders:[],staff:[],all:[],cart:{},view:null,edit:null,pubJ:'',ready:false,pc:0,seen:new Set(),stat:null,sts:{},tk:null,statLoaded:false,site:null,blocks:[]});
  if(!u){view(false);return}
  if(u.uid===ADMIN_UID){S.me={uid:u.uid,role:'admin'};view(true);$('#who').textContent='Admin: all restaurants';
-  subs.push(onSnapshot(collection(db,'restaurants'),s=>{S.all=s.docs.map(d=>({id:d.id,...d.data()}));renderAdmin();syncDir()},x=>toast(say(x))));subs.push(onSnapshot(collection(db,'status'),s=>{S.sts={};s.docs.forEach(d=>S.sts[d.id]=d.data());renderAdmin();syncDir()},x=>toast(say(x))));subs.push(onSnapshot(collection(db,'directory'),s=>{S.dirs={};s.docs.forEach(d=>S.dirs[d.id]=d.data());S.dirsLoaded=true;syncDir()},x=>toast(say(x))));return}
+  subs.push(onSnapshot(collection(db,'restaurants'),s=>{S.all=s.docs.map(d=>({id:d.id,...d.data()}));renderAdmin()},x=>toast(say(x))));subs.push(onSnapshot(collection(db,'status'),s=>{S.sts={};s.docs.forEach(d=>S.sts[d.id]=d.data());renderAdmin()},x=>toast(say(x))));return}
  if(!u.emailVerified){showVerify(u);return}
  orph=setTimeout(()=>{if(!started&&auth.currentUser)showOrphan()},6000);
  subs.push(onSnapshot(doc(db,'users',u.uid),s=>{if(!s.exists()||started)return;started=true;clearTimeout(orph);S.me={uid:u.uid,...s.data()};start()},x=>toast(say(x))))});
@@ -616,7 +622,7 @@ $('#app').addEventListener('submit',async e=>{e.preventDefault();const g=e.targe
  else if(id==='ft'){await updateDoc(R(),{tables:Math.max(1,Math.min(200,+g.t.value||10))});toast('Tables saved')}
  else if(id==='fcat'){const n=g.n.value.trim(),fl=g.f.files[0];if(!n)return;const ex=(S.blocks||[]).find(b=>b.type==='category'&&b.title===n),img=fl?await shrinkTo(fl,400,.8):(ex?ex.img||'':''),o={type:'category',title:n,img,order:ex?ex.order:Date.now(),createdAt:serverTimestamp()};
   if(ex)await setDoc(doc(db,'public',S.me.rid,'blocks',ex.id),o);else await addDoc(BL(),o);g.reset();toast('Category saved')}
- else if(id==='fh'){const up={heroTitle:g.t.value.trim(),heroSub:g.u.value.trim(),updatedAt:serverTimestamp()},fl=g.f.files[0];let th=null;if(fl){up.heroImg=await shrinkTo(fl,1400,.8);th=await thumbOf(fl)}else if(g.x&&g.x.checked){up.heroImg='';th=''}await setDoc(SITE(),up,{merge:true});if(th!==null)await setDoc(doc(db,'directory',S.me.rid),{thumb:th,updatedAt:serverTimestamp()},{merge:true});toast('Banner saved')}
+ else if(id==='fh'){const up={heroTitle:g.t.value.trim(),heroSub:g.u.value.trim(),updatedAt:serverTimestamp()},fl=g.f.files[0];if(fl)up.heroImg=await shrinkTo(fl,1400,.8);else if(g.x&&g.x.checked)up.heroImg='';await setDoc(SITE(),up,{merge:true});toast('Banner saved')}
  else if(id==='fa'){const up={aboutTitle:g.t.value.trim(),aboutText:g.x.value.trim(),updatedAt:serverTimestamp()},fl=g.f.files[0];if(fl)up.aboutImg=await shrinkTo(fl,1100,.8);else if(g.r&&g.r.checked)up.aboutImg='';await setDoc(SITE(),up,{merge:true});toast('Story saved')}
  else if(id==='fst'){await setDoc(SITE(),{hours:g.h.value.trim(),updatedAt:serverTimestamp()},{merge:true});toast('Hours saved')}
  else if(id==='fe'){const fl=g.f.files[0],o={type:'event',title:g.t.value.trim(),when:g.w.value.trim(),desc:g.d.value.trim(),order:Date.now(),createdAt:serverTimestamp()};if(fl)o.img=await shrinkTo(fl,900,.78);await addDoc(BL(),o);g.reset();toast('Added')}
@@ -711,7 +717,7 @@ $('#cust').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
 $('#cust').addEventListener('input',e=>{const t=e.target;if(t.id==='cn')CS.name=t.value;else if(t.id==='cp')CS.phone=t.value;else if(t.id==='cm')CS.note=t.value;else if(t.id==='rd')CS.rd=t.value;else if(t.id==='rt')CS.rt=t.value;else if(t.id==='rg')CS.rg=t.value;else if(t.id==='lp')CS.lp=t.value;else if(t.id==='lo')CS.lo=t.value});
 $('#cust').addEventListener('change',e=>{if(e.target.id==='ct')CS.table=+e.target.value});
 function syncPub(){if(S.me?.role!=='owner'||!S.rest||!S.statLoaded||blockedSt(S.stat))return;const r=S.rest,pub={name:r.name||'',street:r.street||'',city:r.city||'',pin:r.pin||'',phone:r.phone||'',cuisines:r.cuisines||[],tables:r.tables||10,gstOn:!!r.gstOn,gstRate:r.gstRate??5,gstin:r.gstin||'',open:r.open!==false,upi:r.upi||'',upiSimple:!!r.upiSimple,gw:!!(r.gateway&&r.gateway.ok),upiName:r.upiName||r.name||'',maps:r.maps||'',wa:r.wa||'',ig:r.ig||'',fb:r.fb||'',yt:r.yt||'',web:r.web||''},j=JSON.stringify(pub);
- if(j!==S.pubJ){S.pubJ=j;setDoc(doc(db,'public',S.me.rid),pub).catch(x=>toast(say(x)));setDoc(doc(db,'directory',S.me.rid),{name:pub.name,city:pub.city,cuisines:pub.cuisines,open:pub.open,updatedAt:serverTimestamp()},{merge:true}).catch(()=>{})}}
+ if(j!==S.pubJ){S.pubJ=j;setDoc(doc(db,'public',S.me.rid),pub).catch(x=>toast(say(x)))}}
 if(CUST){$('#cust').hidden=false;
  onSnapshot(doc(db,'status',RID),s=>{CS.susp=blockedSt(s.exists()?s.data():null);cRender()},()=>{});
  onSnapshot(doc(db,'public',RID,'site','main'),s=>{CS.site=s.exists()?s.data():{};cRender()},()=>{});
@@ -1011,28 +1017,6 @@ const catNames=()=>[...new Set([...(S.blocks||[]).filter(b=>b.type==='category')
 function catCard(){const cnt={};S.menu.forEach(m=>{const c=(m.cat||'').trim();if(c)cnt[c]=(cnt[c]||0)+1});const defs=(S.blocks||[]).filter(b=>b.type==='category'),names=catNames();
  return `<div class="card sed"><h3>Food categories (${names.length})</h3><p class="mut" style="margin:0 0 10px">Customers see these as round tiles (Momo, Sandwich, Biryani, Rolls...). A tile appears once it has dishes. Choose each dish's category in the Menu tab.</p>${names.map(n=>{const d=defs.find(b=>b.title===n);return `<div class="ln"><span class="catp" style="width:44px;height:44px;font-size:22px;flex:none">${d&&safeImg(d.img)?`<img src="${esc(d.img)}" alt="">`:catIcon(n)}</span><span style="flex:1">${esc(n)} <small style="color:var(--mut)">${cnt[n]||0} dish${(cnt[n]||0)===1?'':'es'}</small></span><button data-delcat="${esc(n)}" aria-label="Delete ${esc(n)}">×</button></div>`}).join('')||'<p class="mut">No categories yet.</p>'}
  <form id="fcat" style="margin-top:12px"><datalist id="catlist">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist><div class="row"><label>Category name *<input name="n" required maxlength="40" list="catlist" placeholder="Momo"></label><label>Photo <small>(optional)</small><input name="f" type="file" accept="image/*"></label></div><button class="btn w">Add category</button></form></div>`}
-
-/* ---------- Main page: restaurants a customer can open and order from ---------- */
-let DIR=[],dirCity='all';
-async function thumbOf(fl){let t=await shrinkTo(fl,420,.7);if(t.length>58000)t=await shrinkTo(fl,300,.6);return t}
-async function loadDir(){const el=$('#rlist');if(!el)return;
- try{const sn=await getDocs(query(collection(db,'directory'),where('live','==',true),limit(100)));DIR=sn.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(a.name).localeCompare(String(b.name)));renderDir()}
- catch(x){el.innerHTML='<p class="mut">Could not load restaurants right now. Please try again later.</p>'}}
-function renderDir(){const el=$('#rlist');if(!el)return;const q=(($('#rq')||{}).value||'').trim().toLowerCase();
- const cities=[...new Set(DIR.map(r=>(r.city||'').trim()).filter(Boolean))].slice(0,10);
- $('#rcity').innerHTML=cities.length>1?['all',...cities].map(c=>`<button type="button" class="chip" data-dc="${esc(c)}" aria-pressed="${dirCity===c}">${c==='all'?'All cities':esc(c)}</button>`).join(''):'';
- const l=DIR.filter(r=>(dirCity==='all'||r.city===dirCity)&&(!q||[r.name,r.city,(r.cuisines||[]).join(' ')].some(v=>String(v||'').toLowerCase().includes(q))));
- el.innerHTML=l.map(r=>`<a class="rc" href="help-you-preview.html"><span class="rcp"${safeImg(r.thumb)?` style="background-image:url(&quot;${esc(r.thumb)}&quot;)"`:''}>${safeImg(r.thumb)?'':esc((r.name||'?').trim().slice(0,1).toUpperCase())}</span><div><h3>${esc(r.name)}</h3><small>${esc([(r.cuisines||[]).slice(0,3).join(' · '),r.city].filter(Boolean).join(' · '))}</small>${r.open===false?'<span class="bd a">Not taking orders now</span>':'<span class="bd g">Order now</span>'}</div></a>`).join('')
-  ||`<p class="mut" style="grid-column:1/-1">${DIR.length?'No restaurant matches your search.':'No restaurants are listed yet. Be the first: register below.'}</p>`}
-if(!CUST){document.addEventListener('input',e=>{if(e.target.id==='rq')renderDir()});document.addEventListener('click',e=>{const b=e.target.closest('[data-dc]');if(b){dirCity=b.dataset.dc;renderDir()}});loadDir()}
-/* Provider side: keep the public list in step with the stages (Functional and not switched off = listed) */
-const dirBusy=new Set();
-function syncDir(){if(!S.me||S.me.role!=='admin'||!S.dirsLoaded)return;
- S.all.forEach(r=>{const st=S.sts[r.id],want=!!st&&(st.stage||'live')==='live'&&!st.suspended,cur=S.dirs[r.id],f={name:r.name||'',city:r.city||'',cuisines:r.cuisines||[]};
-  if(!cur&&!want)return;
-  const same=cur&&!!cur.live===want&&cur.name===f.name&&cur.city===f.city&&JSON.stringify(cur.cuisines||[])===JSON.stringify(f.cuisines);
-  if(same||dirBusy.has(r.id))return;dirBusy.add(r.id);
-  setDoc(doc(db,'directory',r.id),{...f,live:want,updatedAt:serverTimestamp()},{merge:true}).catch(x=>toast(say(x))).finally(()=>dirBusy.delete(r.id))})}
 </script>
 </body>
 </html>
