@@ -414,7 +414,7 @@ function start(){view(true);const d30=new Date();d30.setDate(d30.getDate()-31);
  subs.push(onSnapshot(query(C('orders'),where('day','>=',day(d30))),s=>{S.orders=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds??9e9)-(b.createdAt?.seconds??9e9));const fresh=S.ready?S.orders.filter(o=>!S.seen.has(o.id)&&['pending','new'].includes(o.status)&&(o.source==='customer'||o.by!==(S.me.name||S.me.role))):[];S.seen=new Set(S.orders.map(o=>o.id));S.ready=true;if(fresh.length)alertNew(fresh);checkPayDone();render()}));
  subs.push(onSnapshot(doc(db,'status',S.me.rid),s=>{S.stat=s.exists()?s.data():null;S.statLoaded=true;syncPub();render(true)},()=>{}));
  if(S.me.role==='owner'){subs.push(onSnapshot(SITE(),s=>{S.site=s.exists()?s.data():{};render()},()=>{}));subs.push(onSnapshot(BL(),s=>{S.blocks=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.order||0)-(b.order||0));render()},()=>{}))}
- if(S.me.role==='owner')subs.push(onSnapshot(C('tablekeys'),s=>{S.tk={};s.docs.forEach(d=>S.tk[d.data().table]=d.id);render()},()=>{}));
+ S.tk={};s.docs.forEach(d=>S.tk[d.data().table]=d.id);S.tkLoaded=true;render()},x=>toast(say(x))));
  if(S.me.role==='owner')subs.push(onSnapshot(C('staff'),s=>{S.staff=s.docs.map(d=>({id:d.id,...d.data()}));render()}))}
 
 /* ---------- Helpers ---------- */
