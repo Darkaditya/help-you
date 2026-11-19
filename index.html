@@ -632,26 +632,29 @@ $('#app').addEventListener('submit',async e=>{e.preventDefault();const g=e.targe
  }catch(x){toast(say(x))}});
 
 /* ---------- Owner: customer link and QR ---------- */
-const custUrl=t=>location.origin+location.pathname+'?r='+S.me.rid+(t?'&t='+t+'&k='+((S.tk&&S.tk[t])||''):'');
+const custUrl=t=>location.origin+location.pathname+'?r='+encodeURIComponent(S.me.rid)+(t?'&t='+t+'&k='+encodeURIComponent((S.tk&&S.tk[t])||''):'');
 const tok=()=>Array.from(crypto.getRandomValues(new Uint8Array(14)),b=>'abcdefghjkmnpqrstuvwxyz23456789'[b%31]).join('');
 function share(){const u=custUrl(),n=tableN();
  return `<div class="card" style="max-width:640px"><h3>Your customer menu link</h3><p style="color:var(--mut);margin:0 0 10px">Share this link on WhatsApp, Instagram or Google Maps. Customers see your menu and place <b>takeaway</b> orders. For a table order they must scan the QR code on that table.</p><input id="cu" readonly value="${esc(u)}"><div class="oa"><button class="btn" data-copy>Copy link</button><a class="btn g" href="${esc(u)}" target="_blank" rel="noopener">Open menu</a><button class="btn g" data-qrall>Print table QR cards</button></div></div><div class="card" style="margin-top:14px"><h3>QR for each table</h3><p style="color:var(--mut);margin:0 0 6px">Each table QR has its own secret code. A customer cannot change the table number in the link. If someone edits the link, the order can only go as Takeaway.</p><div class="tb">${[...Array(n)].map((_,i)=>S.tk&&S.tk[i+1]?`<div><b>Table ${i+1}</b><span class="qr" data-n="${i+1}" data-q="${esc(custUrl(i+1))}"></span></div>`:`<div><b>Table ${i+1}</b><small style="display:block;color:var(--mut)">Creating secure code...</small></div>`).join('')}</div><button class="btn g" style="margin-top:12px" data-rotk>Make new secret codes</button><small style="display:block;color:var(--mut);margin-top:6px">Use this if a QR was copied or misused. Old printed QR codes stop working for table orders.</small></div>`}
 let mkBusy=false;
-async function ensureKeys(){if(mkBusy||S.me.role!=='owner'||!S.tk)return;const miss=[...Array(tableN())].map((_,i)=>i+1).filter(n=>!S.tk[n]);if(!miss.length)return;mkBusy=true;
- try{const bt=writeBatch(db);miss.forEach(n=>bt.set(R('tablekeys',tok()),{table:n,createdAt:serverTimestamp()}));await bt.commit()}catch(x){toast(say(x))}mkBusy=false}
+async function ensureKeys(){if(mkBusy||S.me?.role!=='owner'||!S.tkLoaded)return;const tkMap=S.tk||{},miss=[...Array(tableN())].map((_,i)=>i+1).filter(n=>!tkMap[n]);if(!miss.length)return;mkBusy=true;
+ try{const bt=writeBatch(db);miss.forEach(n=>bt.set(R('tablekeys',tok()),{table:n,createdAt:serverTimestamp()}));await bt.commit()}catch(x){toast(say(x))}finally{mkBusy=false}}
 async function rotateKeys(){if(!confirm('Make new secret codes? Old printed table QR codes will stop working for table orders. You must print the QR cards again.'))return;
  try{const bt=writeBatch(db);Object.values(S.tk||{}).forEach(id=>bt.delete(R('tablekeys',id)));[...Array(tableN())].forEach((_,i)=>bt.set(R('tablekeys',tok()),{table:i+1,createdAt:serverTimestamp()}));await bt.commit();toast('New table codes created. Print the QR cards again.')}catch(x){toast(say(x))}}
 let qrP;const loadQR=()=>qrP||(qrP=new Promise((ok,no)=>{if(window.QRCode)return ok();const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';sc.onload=ok;sc.onerror=()=>{qrP=null;no(new Error('QR library failed to load. Check internet.'))};document.head.appendChild(sc)}));
-function drawQR(){loadQR().then(()=>document.querySelectorAll('#main .qr').forEach(el=>{if(el.dataset.done)return;el.dataset.done=1;new QRCode(el,{text:el.dataset.q,width:120,height:120,correctLevel:QRCode.CorrectLevel.M})})).catch(x=>toast(x.message))}
-function copyLink(){const i=$('#cu');i.select();const ok=()=>toast('Link copied');
+function drawQR(){loadQR().then(()=>document.querySelectorAll('#main .qr').forEach(el=>{if(el.dataset.done)return;el.innerHTML='';el.dataset.done='1';new QRCode(el,{text:el.dataset.q,width:120,height:120,correctLevel:QRCode.CorrectLevel.M})})).catch(x=>toast(x.message))}
+function onShareTabRendered(){ensureKeys().finally(()=>drawQR())}
+function copyLink(){const i=$('#cu');if(!i)return;i.select();const ok=()=>toast('Link copied');
  if(navigator.clipboard)navigator.clipboard.writeText(i.value).then(ok,()=>{document.execCommand('copy');ok()});else{document.execCommand('copy');ok()}}
 async function printQR(){try{await loadQR()}catch(x){return toast(x.message)}
- const cards=[...document.querySelectorAll('#main .qr')].map((el,i)=>{const c=el.querySelector('canvas'),src=c?c.toDataURL():(el.querySelector('img')?.src||'');return `<div class="qc"><h2>${esc(S.rest.name)}</h2><img src="${src}" alt=""><p><b>Table ${el.dataset.n||i+1}</b></p><p>Scan to see the menu and order</p></div>`}).join('');
+ const cards=[...document.querySelectorAll('#main .qr')].map((el,i)=>{const c=el.querySelector('canvas'),src=c?c.toDataURL():(el.querySelector('img')?.src||'');return `<div class="qc"><h2>${esc(S.rest?.name||'')}</h2>${src?`<img src="${src}" alt="">`:''}<p><b>Table ${el.dataset.n||i+1}</b></p><p>Scan to see the menu and order</p></div>`}).join('');
  const b=$('#bill');b.className='qrp';b.innerHTML=cards;window.print()}
+$('#main')?.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!$('#main').contains(b))return;
+ if(b.hasAttribute('data-copy'))copyLink();else if(b.hasAttribute('data-qrall'))printQR();else if(b.hasAttribute('data-rotk'))rotateKeys()});
 
 /* ---------- Customer page (opened from the shop link) ---------- */
 const LK=+Q.get('t')||0;
-const lkv=i=>LK&&Q.get('k')&&LK<=(i.tables||10)?LK:0;
+const lkv=i=>LK&&Q.get('k')&&i&&LK<=(i.tables||10)?LK:0;
 const CS={cat:'all',info:null,tk:(Q.get('k')||''),site:{},blocks:[],rd:'',rt:'',rg:'2',menu:[],cart:{},view:'menu',step:'phone',lp:'',lo:'',user:null,mine:[],tr:{},susp:false,filter:'all',table:+Q.get('t')||0,name:'',phone:'',note:'',done:null,err:false};
 const cItems=()=>Object.entries(CS.cart).map(([k,qty])=>{const[id,z]=k.split('|'),m=CS.menu.find(x=>x.id===id);return m&&{name:m.name,size:m.half?(z==='H'?'Half':'Full'):'',price:z==='H'&&m.half?m.half:m.price,qty}}).filter(Boolean);
 const cBill=items=>{const sub=items.reduce((a,i)=>a+i.price*i.qty,0),r=CS.info?.gstOn?(CS.info.gstRate??5):0,gst=Math.round(sub*r)/100;return{sub,gst,gstRate:r,total:Math.round((sub+gst)*100)/100}};
@@ -680,7 +683,7 @@ el.innerHTML=`${topBar(i,n)}${CS.view==='mine'?`<div class="cw">${banner}${mineH
  <button class="btn w" data-cplace ${n?'':'disabled'}>Place order</button>${n?'<button class="btn g w" style="margin-top:8px" data-cclear>Clear cart</button>':''}</div>`:''}</div></section>${aboutSec(i)}${gallerySec()}${eventsSec()}${contactSec(i)}`}${open&&n?`<button class="btn fc" data-cgo>View order (${n}) · ${inr(bl.total)}</button>`:''}`}
 async function cPlace(){const items=cItems();
  if(!items.length)return toast('Your cart is empty.');
- if(CS.table&&CS.table!==lkv(CS.info||{}))CS.table=0;
+ const validTbl=lkv(CS.info||{});if(CS.table&&CS.table!==validTbl)CS.table=0;
  if(!CS.name.trim())return toast('Please enter your name.');
  if(!/^[6-9]\d{9}$/.test(CS.phone.trim()))return toast('Enter a valid 10-digit mobile number.');
  const bl=cBill(items),dk=day(),tm=new Date(),hm=String(tm.getHours()).padStart(2,'0')+String(tm.getMinutes()).padStart(2,'0'),rnd=Array.from({length:4},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*32)]).join(''),id=RID.slice(0,6).toUpperCase()+'-'+dk.slice(2).replace(/-/g,'')+'-'+hm+'-'+rnd;
@@ -714,9 +717,8 @@ if(CUST){$('#cust').hidden=false;
  onSnapshot(collection(db,'public',RID,'blocks'),s=>{CS.blocks=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.order||0)-(b.order||0));cRender()},()=>{});
  try{const sv=JSON.parse(localStorage.getItem('hy_ord_'+RID)||'null');if(sv&&Date.now()-sv.t<6*3600e3){CS.done={id:sv.id,table:sv.table,total:sv.total};CS.track='pending';trackOrder(sv.id)}}catch{}
  cRender(true);
- onSnapshot(doc(db,'public',RID),s=>{CS.info=s.exists()?s.data():null;CS.err=!s.exists();cRender()},()=>{CS.err=true;cRender()});
+ onSnapshot(doc(db,'public',RID),s=>{CS.info=s.exists()?s.data():null;CS.err=!s.exists();cRender(true)},()=>{CS.err=true;cRender(true)});
  onSnapshot(collection(db,'restaurants',RID,'menu'),s=>{CS.menu=s.docs.map(d=>({id:d.id,...d.data()}));cRender()},()=>{})}
-
 /* ---------- New order sound ---------- */
 let SND=false,ac;try{SND=localStorage.getItem('hy_snd')==='1'}catch{}
 const sndLabel=()=>{$('#bSnd').textContent=SND?'🔔 Sound on':'🔕 Sound off'};sndLabel();
